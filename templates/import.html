@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Import CSV{% endblock %}
+{% block content %}
+<h2>Import Subscriptions from CSV</h2>
+<form method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv" required>
+    <button>Import</button>
+</form>
+<div style="margin-top:10px;">
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+{% endblock %}

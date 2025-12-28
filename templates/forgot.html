@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Forgot Password{% endblock %}
+{% block content %}
+<h2>Forgot Password</h2>
+<form method="POST">
+    <input name="email" placeholder="Your email" required>
+    <button>Reset</button>
+</form>
+<div style="margin-top:10px;">
+    <a href="/">Back to Login</a>
+</div>
+{% endblock %}

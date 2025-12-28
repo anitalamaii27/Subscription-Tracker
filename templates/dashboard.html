@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Dashboard</h2>
+<p>You are logged in.</p>
+
+<div style="margin-bottom:15px;">
+    <a href="/add">Add Subscription</a> |
+    <a href="/import">Import CSV</a> |
+    <a href="/export">Export CSV</a> |
+    <a href="/logout">Logout</a>
+</div>
+
+<!-- Sorting -->
+<form method="get" style="margin-bottom:10px;">
+    <label>Sort by:</label>
+    <select name="sort" onchange="this.form.submit()">
+        <option value="name" {% if request.args.get('sort')=='name' %}selected{% endif %}>Name</option>
+        <option value="amount" {% if request.args.get('sort')=='amount' %}selected{% endif %}>Amount</option>
+        <option value="billing_date" {% if request.args.get('sort')=='billing_date' %}selected{% endif %}>Billing Date</option>
+    </select>
+</form>
+
+<ul>
+    {% for sub in subs %}
+        <li {% if sub.id in upcoming %}class="upcoming"{% endif %}>
+            {{ sub.name }} - ${{ sub.amount }} - {{ sub.billing_date }} ({{ sub.recurring }})
+            <span>
+                <a href="/edit/{{ sub.id }}">Edit</a> |
+                <a href="/delete/{{ sub.id }}">Delete</a>
+            </span>
+        </li>
+    {% else %}
+        <li>No subscriptions yet.</li>
+    {% endfor %}
+</ul>
+
+<p class="total">Monthly total: ${{ total }}</p>
+
+<!-- Chart -->
+<!-- Subscription Amounts per Subscription -->
+<canvas id="subscriptionChart" width="400" height="200"
+        data-labels='{{ labels|tojson }}'
+        data-amounts='{{ amounts|tojson }}'></canvas>
+
+<!-- Monthly Totals Over Year -->
+<canvas id="monthlyChart" width="400" height="200" style="margin-top:20px;"
+        data-months='{{ months|tojson }}'
+        data-monthly-totals='{{ monthly_totals|tojson }}'></canvas>
+
+<!-- Include external JS -->
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+{% endblock %}

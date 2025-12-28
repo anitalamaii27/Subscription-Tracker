@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Subscription Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+    <!-- Notifications -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="notifications">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Theme Toggle -->
+    <div style="text-align:right; margin-bottom:10px;">
+        <button onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+
+    {% block content %}{% endblock %}
+</div>
+
+<script>
+function toggleTheme() {
+    const body = document.body;
+    if(body.classList.contains('dark')) {
+        body.classList.remove('dark');
+        localStorage.setItem('theme','light');
+    } else {
+        body.classList.add('dark');
+        localStorage.setItem('theme','dark');
+    }
+}
+
+// Load saved theme
+if(localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+}
+</script>
+</body>
+</html>

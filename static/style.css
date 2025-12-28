@@ -1,0 +1,174 @@
+/* ================= General Body ================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212; /* Dark background default */
+    color: #e0e0e0;           /* Light text default */
+    margin: 0;
+    padding: 0;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* ================= Container ================= */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #1e1e1e;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+/* ================= Headings ================= */
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #1db954; /* Accent green */
+}
+
+/* ================= Forms ================= */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+button {
+    padding: 10px;
+    background-color: #1db954;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: #1ed760;
+}
+
+/* ================= Links ================= */
+a {
+    color: #1db954;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ================= Lists (Subscriptions) ================= */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px 15px;
+    background-color: #2a2a2a;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Highlight upcoming subscriptions */
+li.upcoming {
+    background-color: #333333;
+    border-left: 4px solid #ffbb33; /* Orange accent */
+}
+
+/* Delete/Edit Links */
+li a {
+    color: #ff4d4f;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+/* ================= Dashboard ================= */
+p.total {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+/* ================= Notifications ================= */
+.notifications {
+    margin-bottom: 15px;
+}
+
+.flash {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.flash.success { background-color: #1db954; color: #fff; }
+.flash.error   { background-color: #ff4d4f; color: #fff; }
+.flash.info    { background-color: #3498db; color: #fff; }
+
+/* ================= Canvas Chart ================= */
+canvas {
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+/* ================= Dark/Light Theme ================= */
+body.light {
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+body.light .container {
+    background-color: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+body.light input,
+body.light select {
+    background-color: #f9f9f9;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+body.light li {
+    background-color: #f4f4f4;
+}
+
+body.light li.upcoming {
+    background-color: #ffe8b0;
+    border-left: 4px solid #ffbb33;
+}
+
+body.light .flash.success { background-color: #1db954; color: #fff; }
+body.light .flash.error { background-color: #ff4d4f; color: #fff; }
+body.light .flash.info { background-color: #3498db; color: #fff; }
+
+/* ================= Responsive ================= */
+@media (max-width: 600px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+}

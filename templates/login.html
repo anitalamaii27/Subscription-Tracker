@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<h2>Login</h2>
+<form method="POST">
+    <input name="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button>Login</button>
+</form>
+<div style="margin-top:10px;">
+    <a href="/register">Register</a> |
+    <a href="/forgot">Forgot password?</a>
+</div>
+{% endblock %}

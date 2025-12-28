@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Edit Subscription{% endblock %}
+{% block content %}
+<h2>Edit Subscription</h2>
+<form method="POST">
+    <input name="name" placeholder="Subscription Name" value="{{ sub.name }}" required>
+    <input name="amount" type="number" step="0.01" placeholder="Amount" value="{{ sub.amount }}" required>
+    <input name="date" type="date" value="{{ sub.billing_date }}" required>
+    <label>Recurring:</label>
+    <select name="recurring">
+        <option value="monthly" {% if sub.recurring=='monthly' %}selected{% endif %}>Monthly</option>
+        <option value="yearly" {% if sub.recurring=='yearly' %}selected{% endif %}>Yearly</option>
+    </select>
+    <button>Update</button>
+</form>
+<div style="margin-top:10px;">
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+{% endblock %}
