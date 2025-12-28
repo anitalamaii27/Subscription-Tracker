@@ -50,7 +50,7 @@ python add_session_column.py  # Adds session_token column if needed
 5. Run the app:
 python app.py
 
-6. Open your browser and go to http://127.0.0.1:5000
+
 
 
 ## Usage
