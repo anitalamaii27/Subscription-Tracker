@@ -33,8 +33,7 @@ cd Subscription-Tracker/auth_app
 bash
 Copy code
 python -m venv venv
-source venv/Scripts/activate   # Windows
-# or
+source venv/Scripts/activate   # Windows #or
 source venv/bin/activate       # Mac/Linux
 
 3. Install dependencies:
@@ -54,7 +53,7 @@ python app.py
 6. Open your browser and go to http://127.0.0.1:5000
 
 
-Usage
+###Usage
 - Register a new account
 - Add subscriptions with name, amount, billing date, and recurring type
 - View dashboard with charts and summaries
