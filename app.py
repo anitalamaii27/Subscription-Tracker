@@ -23,56 +23,71 @@ def get_db():
 # Middleware: check session timeout
 # -------------------------------
 @app.before_request
-
 def session_management():
-    # Auto-logout after inactivity
     if "user_id" in session:
         now = datetime.now().timestamp()
         last_active = session.get("last_active", now)
+
         if now - last_active > SESSION_TIMEOUT:
+            # 🔥 CLEAR DB TOKEN (this was missing)
+            db = get_db()
+            db.execute(
+                "UPDATE users SET session_token = NULL WHERE id = ?",
+                (session["user_id"],)
+            )
+            db.commit()
+            db.close()
+
             session.clear()
             flash("Session expired due to inactivity.", "error")
-        else:
-            session["last_active"] = now  # Update last activity timestamp
+            return redirect(url_for("login"))
 
-# -------------------------------
-# Login route
-# -------------------------------
+        # Update activity timestamp
+        session["last_active"] = now
+
 @app.route("/", methods=["GET", "POST"])
-
 def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
 
         db = get_db()
-        user = db.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
-        db.close()
+        user = db.execute(
+            "SELECT * FROM users WHERE email = ?",
+            (email,)
+        ).fetchone()
 
-        # Verify password
         if user and check_password_hash(user["password"], password):
-            # Check for duplicate login using session_token
-            if user["session_token"]:
-                flash("User already logged in elsewhere!", "error")
-                return redirect("/")
 
-            # Set session and unique token
+            # Defensive cleanup of any stale token
+            db.execute(
+                "UPDATE users SET session_token = NULL WHERE id = ?",
+                (user["id"],)
+            )
+            db.commit()
+
+            # Create new session
+            token = str(uuid.uuid4())
             session["user_id"] = user["id"]
             session["last_active"] = datetime.now().timestamp()
-            token = str(uuid.uuid4())
             session["session_token"] = token
 
-            db = get_db()
-            db.execute("UPDATE users SET session_token=? WHERE id=?", (token, user["id"]))
+            # Store new token
+            db.execute(
+                "UPDATE users SET session_token = ? WHERE id = ?",
+                (token, user["id"])
+            )
             db.commit()
             db.close()
 
             flash("Login successful!", "success")
             return redirect("/dashboard")
-        else:
-            flash("Invalid credentials.", "error")
+
+        db.close()
+        flash("Invalid credentials.", "error")
 
     return render_template("login.html")
+
 
 # -------------------------------
 # Register route
