@@ -5,6 +5,9 @@ import csv
 from datetime import datetime, timedelta
 import os
 import uuid  # For session tokens
+from init_db import init_db
+init_db()  # ensures DB and tables exist on every startup
+
 
 app = Flask(__name__)
 app.secret_key = "dev-secret-key"  # Secret key for session management
