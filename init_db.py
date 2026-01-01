@@ -1,9 +1,12 @@
 import sqlite3
+import os
 
-conn = sqlite3.connect("users.db")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "users.db")
+
+conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
 
-# Create users table with session_token column
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,15 +16,14 @@ CREATE TABLE IF NOT EXISTS users (
 )
 """)
 
-# Create subscriptions table
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS subscriptions (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
-    name TEXT,
-    amount REAL,
-    billing_date TEXT,
-    recurring TEXT,
+    user_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    amount REAL NOT NULL,
+    billing_date TEXT NOT NULL,
+    recurring TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id)
 )
 """)
